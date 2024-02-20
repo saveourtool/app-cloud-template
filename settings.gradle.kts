@@ -17,6 +17,8 @@ plugins {
     id("com.gradle.enterprise") version "3.15.1"
 }
 
+includeBuild("gradle/plugins")
+include("backend")
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
