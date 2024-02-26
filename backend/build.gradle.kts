@@ -1,5 +1,5 @@
 plugins {
-    id("com.saveourtool.malware.detection.build.kotlin-configuration")
+    id("com.saveourtool.malware.detection.build.spring-boot-kotlin-configuration")
 }
 
 kotlin {

@@ -1,3 +1,7 @@
+import org.ajoberstar.reckon.core.Reckoner
+import org.ajoberstar.reckon.core.Scope
+import org.ajoberstar.reckon.gradle.ReckonExtension
+
 rootProject.name = "malware-detection-cloud"
 
 dependencyResolutionManagement {
@@ -15,6 +19,7 @@ pluginManagement {
 
 plugins {
     id("com.gradle.enterprise") version "3.15.1"
+    id("org.ajoberstar.reckon.settings") version "0.18.3"
 }
 
 includeBuild("gradle/plugins")
@@ -31,4 +36,11 @@ gradleEnterprise {
             termsOfServiceAgree = "yes"
         }
     }
+}
+
+extensions.configure<ReckonExtension> {
+    setDefaultInferredScope(Scope.PATCH)
+    stages("beta", "rc", Reckoner.FINAL_STAGE)
+    setScopeCalc(calcScopeFromProp().or(calcScopeFromCommitMessages()))
+    setStageCalc(calcStageFromProp())
 }
