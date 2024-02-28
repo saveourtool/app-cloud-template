@@ -1,5 +1,3 @@
-import com.saveourtool.malware.detection.build.registerDockerService
-
 plugins {
     id("com.saveourtool.malware.detection.build.spring-boot-kotlin-configuration")
     id("com.saveourtool.malware.detection.build.s3-local-run-configuration")
@@ -18,4 +16,6 @@ kotlin {
     }
 }
 
-//project.registerS3Service("backend/src/jvmMain/resources/s3")
+s3LocalRun {
+    startupPath = "backend/src/jvmMain/resources/s3"
+}
