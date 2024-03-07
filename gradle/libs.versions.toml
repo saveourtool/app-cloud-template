@@ -1,0 +1,14 @@
+[versions]
+java = "21"
+kotlin = "1.9.22"
+spring-boot = "3.2.2"
+spring-dependency-management-plugin = "1.1.4"
+
+[plugins]
+
+[libraries]
+kotlin-spring-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-allopen", version.ref = "kotlin" }
+kotlin-jpa-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-noarg", version.ref = "kotlin" }
+kotlin-multiplatform-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+spring-boot-gradle-plugin = { module = "org.springframework.boot:spring-boot-gradle-plugin", version.ref = "spring-boot" }
+spring-dependency-management-gradle-plugin = { module = "io.spring.gradle:dependency-management-plugin", version.ref = "spring-dependency-management-plugin" }
