@@ -1,4 +1,4 @@
-package com.saveourtool.malware.detection.model
+package com.saveourtool.template.backend.model
 
 /**
  * A model for artifact

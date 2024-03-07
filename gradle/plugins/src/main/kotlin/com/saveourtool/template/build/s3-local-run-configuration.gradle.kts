@@ -1,33 +1,35 @@
-package com.saveourtool.malware.detection.build
+package com.saveourtool.template.build
 
-import org.gradle.api.provider.Property
-import org.gradle.kotlin.dsl.create
 import org.intellij.lang.annotations.Language
 
-interface MysqlLocalRunExtension {
-    val rootPassword: Property<String>
+interface S3LocalRunExtension {
+    val bucketName: Property<String>
     val user: Property<String>
     val password: Property<String>
     val startupPath: Property<String>
 }
 
-val extension: MysqlLocalRunExtension = extensions.create("mysqlLocalRun")
+val extension: S3LocalRunExtension = extensions.create("s3LocalRun")
 
 afterEvaluate {
-    val rootPassword: String = extension.password.getOrElse("123")
+    val bucketName: String = extension.bucketName.getOrElse("test")
+    val user: String = extension.user.getOrElse("admin")
+    val password: String = extension.password.getOrElse("adminadmin")
 
     registerDockerService(
-        serviceName = "mysql",
+        serviceName = "minio",
         startupDelayInMillis = DEFAULT_STARTUP_TIMEOUT,
         dockerComposeContent = """
-            |  mysql:
-            |    image: mysql:8.0.28-oracle
-            |    container_name: mysql
-            |    ports:
-            |      - "3306:3306"
-            |    environment:
-            |      - "MYSQL_ROOT_PASSWORD=$rootPassword"
-            |    command: ["--log_bin_trust_function_creators=1"]
+            |minio:
+            |  image: minio/minio:latest
+            |  container_name: minio
+            |  command: server /data --console-address ":9090"
+            |  ports:
+            |    - 9000:9000
+            |    - 9090:9090
+            |  environment:
+            |    MINIO_ROOT_USER: $user
+            |    MINIO_ROOT_PASSWORD: $password
             """.trimMargin()
     ).also { startTask ->
         extension.startupPath.orNull?.let { startupPath ->

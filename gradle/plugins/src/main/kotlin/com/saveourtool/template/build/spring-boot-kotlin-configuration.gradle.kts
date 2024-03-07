@@ -1,4 +1,4 @@
-package com.saveourtool.malware.detection.build
+package com.saveourtool.template.build
 
 import org.gradle.accessors.dm.LibrariesForLibs
 import org.gradle.api.tasks.testing.Test

@@ -2,7 +2,7 @@ import org.ajoberstar.reckon.core.Reckoner
 import org.ajoberstar.reckon.core.Scope
 import org.ajoberstar.reckon.gradle.ReckonExtension
 
-rootProject.name = "malware-detection-cloud"
+rootProject.name = "app-cloud-template"
 
 dependencyResolutionManagement {
     repositories {

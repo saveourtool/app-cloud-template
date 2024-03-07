@@ -1,4 +1,4 @@
-package com.saveourtool.malware.detection
+package com.saveourtool.template.backend
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
@@ -7,8 +7,8 @@ import org.springframework.boot.runApplication
  * @since 2024-02-20
  */
 @SpringBootApplication
-class MalwareDetectionCloudApplication
+class BackendApplication
 
 fun main(args: Array<String>) {
-    runApplication<MalwareDetectionCloudApplication>(*args)
+    runApplication<BackendApplication>(*args)
 }

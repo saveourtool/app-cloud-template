@@ -1,10 +1,6 @@
-/*
- * Copyright (c) Huawei Technologies Co., Ltd. 2024-2024. All rights reserved.
- */
+package com.saveourtool.template.backend
 
-package com.saveourtool.malware.detection
-
-import com.saveourtool.malware.detection.model.Artifact
+import com.saveourtool.template.backend.model.Artifact
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.PostMapping
 

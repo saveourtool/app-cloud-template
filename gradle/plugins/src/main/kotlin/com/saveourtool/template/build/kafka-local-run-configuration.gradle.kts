@@ -1,4 +1,4 @@
-package com.saveourtool.malware.detection.build
+package com.saveourtool.template.build
 
 registerDockerService(
     serviceName = "kafka",

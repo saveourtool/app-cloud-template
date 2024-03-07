@@ -1,5 +1,5 @@
 plugins {
-    id("com.saveourtool.malware.detection.build.kafka-local-run-configuration")
+    id("com.saveourtool.template.build.kafka-local-run-configuration")
 }
 
-group = "com.saveourtool.malware.detection"
+group = "com.saveourtool.template"

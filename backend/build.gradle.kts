@@ -1,6 +1,6 @@
 plugins {
-    id("com.saveourtool.malware.detection.build.spring-boot-kotlin-configuration")
-    id("com.saveourtool.malware.detection.build.s3-local-run-configuration")
+    id("com.saveourtool.template.build.spring-boot-kotlin-configuration")
+    id("com.saveourtool.template.build.s3-local-run-configuration")
 }
 
 kotlin {
