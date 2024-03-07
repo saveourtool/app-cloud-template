@@ -1,6 +1,7 @@
 plugins {
     id("com.saveourtool.template.build.spring-boot-kotlin-configuration")
     id("com.saveourtool.template.build.s3-local-run-configuration")
+    id("com.saveourtool.template.build.mysql-local-run-configuration")
 }
 
 kotlin {
@@ -18,4 +19,9 @@ kotlin {
 
 s3LocalRun {
     startupPath = "backend/src/jvmMain/resources/s3"
+}
+
+mysqlLocalRun {
+    user = "user"
+    liquibaseChangelogPath = project.layout.projectDirectory.file("src/db/db.changelog.xml")
 }
