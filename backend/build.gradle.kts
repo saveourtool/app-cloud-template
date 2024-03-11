@@ -18,10 +18,9 @@ kotlin {
 }
 
 s3LocalRun {
-    startupPath = "backend/src/jvmMain/resources/s3"
+    startupPath = project.layout.projectDirectory.dir("src/jvmMain/resources/s3")
 }
 
 mysqlLocalRun {
-    user = "user"
     liquibaseChangelogPath = project.layout.projectDirectory.file("src/db/db.changelog.xml")
 }

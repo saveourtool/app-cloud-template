@@ -15,44 +15,36 @@ interface MysqlLocalRunExtension {
 
 val extension: MysqlLocalRunExtension = extensions.create("mysqlLocalRun")
 
-val rootPassword: String by lazy {
-    extension.password.getOrElse("123")
-}
-val user: String by lazy {
-    extension.user.getOrElse("root")
-}
-val password: String by lazy {
-    extension.password.getOrElse(rootPassword)
-}
-val databaseName: String by lazy {
-    extension.databaseName.getOrElse("test")
-}
+val rootPasswordProvider: Provider<String> = extension.password.orElse("123")
+val databaseNameProvider: Provider<String> = extension.databaseName.orElse("test")
+val userProvider: Provider<String> = extension.user.orElse("root")
+val passwordProvider: Provider<String> = extension.password.orElse(rootPasswordProvider)
 
-afterEvaluate {
-    registerDockerService(
-        serviceName = "mysql",
-        startupDelayInMillis = DEFAULT_STARTUP_TIMEOUT,
-        dockerComposeContent = """
-            |  mysql:
-            |    image: mysql:8.0.28-oracle
-            |    container_name: mysql
-            |    ports:
-            |      - "3306:3306"
-            |    environment:
-            |      - "MYSQL_ROOT_PASSWORD=$rootPassword"
-            |      - "MYSQL_USER=$user"
-            |      - "MYSQL_PASSWORD=$password"
-            |      - "MYSQL_DATABASE=$databaseName"
-            """.trimMargin()
-    ).also { startTask ->
-        registerLiquibaseUpdateTask().also {
-            startTask.configure { finalizedBy(it) }
-        }
+registerDockerService(
+    serviceName = "mysql",
+    startupDelayInMillis = DEFAULT_STARTUP_TIMEOUT,
+    dockerComposeContentProvider = provider {
+        val isNotRootUser = userProvider.map { !it.equals("root", ignoreCase = true) }.get()
+        """
+        |  mysql:
+        |    image: mysql:8.0.28-oracle
+        |    container_name: mysql
+        |    ports:
+        |      - "3306:3306"
+        |    environment:
+        |      - "MYSQL_ROOT_PASSWORD=${rootPasswordProvider.get()}"
+        |      - "MYSQL_DATABASE=${databaseNameProvider.get()}"
+        |      ${if (isNotRootUser) "- \"MYSQL_USER=${userProvider.get()}\"" else ""}
+        |      ${if (isNotRootUser) "- \"MYSQL_PASSWORD=${passwordProvider.get()}\"" else ""}
+        """.trimMargin()
+    }
+).also { startTask ->
+    registerLiquibaseUpdateTask().also {
+        startTask.configure { finalizedBy(it) }
     }
 }
 
-fun Project.registerLiquibaseUpdateTask(
-): TaskProvider<Exec> = tasks.register<Exec>("liquibaseUpdate") {
+fun Project.registerLiquibaseUpdateTask(): TaskProvider<Exec> = tasks.register<Exec>("liquibaseUpdate") {
     val liquibaseChangelogPath = extension.liquibaseChangelogPath.get().asFile
     val liquibaseChangelogDir =
         extension.liquibaseChangelogDir.map { it.asFile }.getOrElse(liquibaseChangelogPath.parentFile)
@@ -70,10 +62,10 @@ fun Project.registerLiquibaseUpdateTask(
             "--env", "INSTALL_MYSQL=true",
             "--network", "mysql_default",
             "liquibase/liquibase:4.20",
-            "--url=jdbc:mysql://mysql:3306/$databaseName",
+            "--url=jdbc:mysql://mysql:3306/${databaseNameProvider.get()}",
             "--changeLogFile=${liquibaseChangelogPath.relativeTo(liquibaseChangelogDir)}",
-            "--username=$user",
-            "--password=$password",
+            "--username=${userProvider.get()}",
+            "--password=${passwordProvider.get()}",
             "--log-level=info",
         ) + contextsArgs + listOf("update")
     )
