@@ -9,6 +9,7 @@ plugins {
     kotlin("multiplatform")
     kotlin("plugin.spring")
     kotlin("plugin.jpa")
+    kotlin("plugin.serialization")
     id("org.springframework.boot")
     id("io.spring.dependency-management")
 }
@@ -24,6 +25,15 @@ java {
 kotlin {
     jvmToolchain {
         this.languageVersion.set(JavaLanguageVersion.of(javaVersion.majorVersion))
+    }
+
+    sourceSets {
+        jvmMain {
+            dependencies {
+                implementation(libs.springdoc.openapi.starter.common)
+                implementation(libs.springdoc.openapi.starter.webflux.ui)
+            }
+        }
     }
 }
 
