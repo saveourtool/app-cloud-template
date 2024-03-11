@@ -2,76 +2,72 @@ package com.saveourtool.template.build
 
 import org.gradle.api.provider.Property
 import org.gradle.kotlin.dsl.create
-import org.intellij.lang.annotations.Language
 
 interface MysqlLocalRunExtension {
     val rootPassword: Property<String>
     val user: Property<String>
     val password: Property<String>
-    val startupPath: Property<String>
+    val databaseName: Property<String>
+    val liquibaseChangelogPath: RegularFileProperty
+    val liquibaseChangelogDir: DirectoryProperty
+    val contexts: ListProperty<String>
 }
 
 val extension: MysqlLocalRunExtension = extensions.create("mysqlLocalRun")
 
-afterEvaluate {
-    val rootPassword: String = extension.password.getOrElse("123")
+val rootPasswordProvider: Provider<String> = extension.password.orElse("123")
+val databaseNameProvider: Provider<String> = extension.databaseName.orElse("test")
+val userProvider: Provider<String> = extension.user.orElse("root")
+val passwordProvider: Provider<String> = extension.password.orElse(rootPasswordProvider)
 
-    registerDockerService(
-        serviceName = "mysql",
-        startupDelayInMillis = DEFAULT_STARTUP_TIMEOUT,
-        dockerComposeContent = """
-            |  mysql:
-            |    image: mysql:8.0.28-oracle
-            |    container_name: mysql
-            |    ports:
-            |      - "3306:3306"
-            |    environment:
-            |      - "MYSQL_ROOT_PASSWORD=$rootPassword"
-            |    command: ["--log_bin_trust_function_creators=1"]
-            """.trimMargin()
-    ).also { startTask ->
-        extension.startupPath.orNull?.let { startupPath ->
-            registerMinioStartupTask(
-                "bucketName",
-                "user",
-                "password",
-                startupPath,
-            ).also {
-                startTask.configure { finalizedBy(it) }
-            }
-        }
+registerDockerService(
+    serviceName = "mysql",
+    startupDelayInMillis = DEFAULT_STARTUP_TIMEOUT,
+    dockerComposeContentProvider = provider {
+        val isNotRootUser = userProvider.map { !it.equals("root", ignoreCase = true) }.get()
+        """
+        |  mysql:
+        |    image: mysql:8.0.28-oracle
+        |    container_name: mysql
+        |    ports:
+        |      - "3306:3306"
+        |    environment:
+        |      - "MYSQL_ROOT_PASSWORD=${rootPasswordProvider.get()}"
+        |      - "MYSQL_DATABASE=${databaseNameProvider.get()}"
+        |      ${if (isNotRootUser) "- \"MYSQL_USER=${userProvider.get()}\"" else ""}
+        |      ${if (isNotRootUser) "- \"MYSQL_PASSWORD=${passwordProvider.get()}\"" else ""}
+        """.trimMargin()
+    }
+).also { startTask ->
+    registerLiquibaseUpdateTask().also {
+        startTask.configure { finalizedBy(it) }
     }
 }
 
-fun Project.registerMinioStartupTask(
-    bucketName: String,
-    user: String,
-    password: String,
-    startupPath: String,
-): TaskProvider<Exec> = tasks.register<Exec>("minioStartup") {
-    val workingDirectory = layout.buildDirectory.dir("minio-startup")
-    val runScriptProvider = workingDirectory.map { it.file("run.sh") }
-    outputs.file(runScriptProvider)
+fun Project.registerLiquibaseUpdateTask(): TaskProvider<Exec> = tasks.register<Exec>("liquibaseUpdate") {
+    val liquibaseChangelogPath = extension.liquibaseChangelogPath.get().asFile
+    val liquibaseChangelogDir =
+        extension.liquibaseChangelogDir.map { it.asFile }.getOrElse(liquibaseChangelogPath.parentFile)
 
-    @Language("sh")
-    val shellScript: String = """
-        #!/bin/sh
-        /usr/bin/mc alias set minio http://host.docker.internal:9000 $user $password
-        /usr/bin/mc mb --ignore-existing minio/$bucketName
-        /usr/bin/mc policy set public minio/$bucketName
-        /usr/bin/mc cp --recursive /data/ minio/$bucketName
-    """.trimIndent()
-
-    doFirst {
-        runScriptProvider.get().asFile.writeText(shellScript)
-    }
-
+    val contextsArgs = extension.contexts.orNull
+        ?.takeUnless { it.isEmpty() }
+        ?.joinToString(",", prefix = "--contexts")
+        ?.let { listOf(it) }
+        ?: emptyList()
     commandLine(
-        "docker", "run",
-        "-v", "${project.rootProject.layout.projectDirectory.asFile}/$startupPath:/data",
-        "-v", "${workingDirectory.get().asFile}:/run",
-        "--rm",
-        "--entrypoint=/run/run.sh",
-        "minio/mc:latest",
+        listOf(
+            "docker", "run",
+            "-v", "$liquibaseChangelogDir:/liquibase/changelog",
+            "--rm",
+            "--env", "INSTALL_MYSQL=true",
+            // <mysql>_default -- takes from service name
+            "--network", "mysql_default",
+            "liquibase/liquibase:4.20",
+            "--url=jdbc:mysql://mysql:3306/${databaseNameProvider.get()}",
+            "--changeLogFile=${liquibaseChangelogPath.relativeTo(liquibaseChangelogDir)}",
+            "--username=${userProvider.get()}",
+            "--password=${passwordProvider.get()}",
+            "--log-level=info",
+        ) + contextsArgs + listOf("update")
     )
 }

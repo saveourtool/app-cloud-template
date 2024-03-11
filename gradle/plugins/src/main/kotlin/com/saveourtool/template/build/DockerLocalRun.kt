@@ -12,19 +12,32 @@ import java.io.ByteArrayOutputStream
 
 const val DEFAULT_STARTUP_TIMEOUT = 5_000L
 
+internal fun Project.registerDockerService(
+    serviceName: String,
+    startupDelayInMillis: Long,
+    @Language("yaml")
+    dockerComposeContent: String,
+): TaskProvider<Exec> = registerDockerService(
+    serviceName = serviceName,
+    startupDelayInMillis = startupDelayInMillis,
+    dockerComposeContentProvider = providers.provider {
+        dockerComposeContent
+    }
+)
+
 /**
- * Registers tasks to start [serviceName] specified in [dockerComposeContent]
+ * Registers tasks to start [serviceName] specified in [dockerComposeContentProvider]
  *
  * @param serviceName
  * @param startupDelayInMillis
- * @param dockerComposeContent
+ * @param dockerComposeContentProvider
  * @return task which starts [serviceName]
  */
 internal fun Project.registerDockerService(
     serviceName: String,
     startupDelayInMillis: Long,
     @Language("yaml")
-    dockerComposeContent: String,
+    dockerComposeContentProvider: Provider<String>,
 ): TaskProvider<Exec> {
     val serviceNameCapitalized = serviceName.split("-").joinToString("") { it.capitalized() }
     val composeFileProvider: Provider<RegularFile> = layout.buildDirectory.dir(serviceName).map { it.file("docker-compose.yaml") }
@@ -37,7 +50,7 @@ internal fun Project.registerDockerService(
                 .writeText("""
                     |version: '3.9'
                     |services:
-                    |${dockerComposeContent.prependIndent(  )}
+                    |${dockerComposeContentProvider.get().prependIndent(  )}
                     """.trimMargin())
         }
     }
