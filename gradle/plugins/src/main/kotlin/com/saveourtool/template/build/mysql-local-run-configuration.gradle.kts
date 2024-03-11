@@ -60,6 +60,7 @@ fun Project.registerLiquibaseUpdateTask(): TaskProvider<Exec> = tasks.register<E
             "-v", "$liquibaseChangelogDir:/liquibase/changelog",
             "--rm",
             "--env", "INSTALL_MYSQL=true",
+            // <mysql>_default -- takes from service name
             "--network", "mysql_default",
             "liquibase/liquibase:4.20",
             "--url=jdbc:mysql://mysql:3306/${databaseNameProvider.get()}",

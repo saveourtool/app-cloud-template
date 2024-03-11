@@ -63,6 +63,7 @@ fun Project.registerMinioStartupTask(): TaskProvider<Exec> = tasks.register<Exec
         "docker", "run",
         "-v", "$startupPath:/data",
         "-v", "${workingDirectory.get().asFile}:/run",
+        // <minio>_default -- takes from service name
         "--network", "minio_default",
         "--rm",
         "--entrypoint=/run/run.sh",
