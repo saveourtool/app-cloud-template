@@ -2,10 +2,19 @@ plugins {
     id("com.saveourtool.template.build.spring-boot-kotlin-configuration")
     id("com.saveourtool.template.build.s3-local-run-configuration")
     id("com.saveourtool.template.build.mysql-local-run-configuration")
+    application
+}
+
+application {
+  mainClass.set("com.saveourtool.template.backend.BackendApplicationKt")
 }
 
 kotlin {
-    jvm()
+    jvm {
+        // another workaround:
+        // https://stackoverflow.com/questions/69437212/how-to-use-gradle-distribution-plugin-alongside-with-kotlin-multiplatform
+        withJava()
+    }
 
     sourceSets {
         jvmMain {
