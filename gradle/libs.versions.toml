@@ -1,8 +1,7 @@
 [versions]
 java = "21"
 kotlin = "1.9.22"
-spring-boot = "3.2.2"
-spring-dependency-management-plugin = "1.1.4"
+spring-boot = "3.2.3"
 springdoc = "2.3.0"
 
 [plugins]
@@ -13,6 +12,7 @@ kotlin-jpa-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-noarg", versi
 kotlin-multiplatform-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 kotlin-serialization-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
 spring-boot-gradle-plugin = { module = "org.springframework.boot:spring-boot-gradle-plugin", version.ref = "spring-boot" }
-spring-dependency-management-gradle-plugin = { module = "io.spring.gradle:dependency-management-plugin", version.ref = "spring-dependency-management-plugin" }
+
+spring-boot-dependencies = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot" }
 springdoc-openapi-starter-common = { module = "org.springdoc:springdoc-openapi-starter-common", version.ref = "springdoc" }
 springdoc-openapi-starter-webflux-ui = { module = "org.springdoc:springdoc-openapi-starter-webflux-ui", version.ref = "springdoc" }
