@@ -23,7 +23,8 @@ plugins {
 }
 
 includeBuild("gradle/plugins")
-include("backend")
+include("backend-webmvc")
+include("backend-webflux")
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 

@@ -4,10 +4,6 @@ plugins {
     id("com.saveourtool.template.build.mysql-local-run-configuration")
 }
 
-springBoot {
-    mainClass.set("com.saveourtool.template.backend.BackendApplicationKt")
-}
-
 dependencies {
     implementation(libs.springdoc.openapi.starter.common)
     implementation(libs.springdoc.openapi.starter.webflux.ui)
@@ -17,9 +13,10 @@ dependencies {
 }
 
 s3LocalRun {
-    startupPath = project.layout.projectDirectory.dir("src/jvmMain/resources/s3")
+    startupPath = project.layout.projectDirectory.dir("src/main/resources/s3")
 }
 
 mysqlLocalRun {
+    databaseName = "backend_webflux"
     liquibaseChangelogPath = project.layout.projectDirectory.file("src/db/db.changelog.xml")
 }
