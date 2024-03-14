@@ -9,6 +9,7 @@ dependencies {
     implementation(libs.springdoc.openapi.starter.webmvc.ui)
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
 s3LocalRun {
