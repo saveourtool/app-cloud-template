@@ -1,5 +1,5 @@
 plugins {
-    id("com.saveourtool.template.build.kotlin-mpp-configuration")
+    id("com.saveourtool.template.build.kotlin-mpp-with-jvm-configuration")
 }
 
 kotlin {
