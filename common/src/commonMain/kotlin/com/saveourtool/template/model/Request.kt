@@ -1,4 +1,4 @@
-package com.saveourtool.template.backend.model
+package com.saveourtool.template.model
 
 import kotlinx.serialization.Serializable
 
