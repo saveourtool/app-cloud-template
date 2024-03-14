@@ -1,24 +1,17 @@
+import com.saveourtool.template.build.kotlinw
+
 plugins {
-    kotlin("multiplatform")
+    id("com.saveourtool.template.build.kotlin-mpp-with-js-configuration")
 }
 
 kotlin {
     js {
-        browser {
-            commonWebpackConfig {
-                cssSupport {
-                    enabled = true
-                }
-            }
-        }
-        useCommonJs()
         binaries.executable()
     }
 
     sourceSets {
         jsMain {
             dependencies {
-                implementation(project.dependencies.platform(libs.kotlin.wrappers.bom))
                 implementation(kotlinw("extensions"))
                 implementation(kotlinw("react"))
                 implementation(kotlinw("react-dom"))
@@ -26,5 +19,3 @@ kotlin {
         }
     }
 }
-
-fun kotlinw(target: String): String = "org.jetbrains.kotlin-wrappers:kotlin-$target"
