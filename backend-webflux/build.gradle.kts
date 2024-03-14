@@ -11,6 +11,7 @@ dependencies {
     implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json")
     implementation(projects.common)
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
 s3LocalRun {
