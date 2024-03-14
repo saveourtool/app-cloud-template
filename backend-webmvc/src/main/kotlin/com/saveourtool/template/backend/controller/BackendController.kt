@@ -1,6 +1,6 @@
 package com.saveourtool.template.backend.controller
 
-import com.saveourtool.template.backend.model.Request
+import com.saveourtool.template.model.Request
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
