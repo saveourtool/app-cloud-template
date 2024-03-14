@@ -23,6 +23,7 @@ plugins {
 }
 
 includeBuild("gradle/plugins")
+include("common")
 include("backend-webmvc")
 include("backend-webflux")
 
