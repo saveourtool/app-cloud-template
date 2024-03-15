@@ -15,6 +15,7 @@ kotlin {
                 implementation(kotlinw("extensions"))
                 implementation(kotlinw("react"))
                 implementation(kotlinw("react-dom"))
+                implementation(kotlinw("react-router-dom"))
             }
         }
     }
