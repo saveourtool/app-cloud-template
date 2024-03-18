@@ -18,12 +18,13 @@ java {
 }
 
 kotlin {
+    jvm()
     jvmToolchain {
         this.languageVersion.set(JavaLanguageVersion.of(javaVersion.majorVersion))
     }
 
     sourceSets {
-        jvmMain {
+        val jvmMain by getting {
             dependencies {
                 implementation(project.dependencies.enforcedPlatform(libs.spring.boot.dependencies))
             }

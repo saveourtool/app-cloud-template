@@ -13,7 +13,7 @@ plugins {
 val libs = the<LibrariesForLibs>()
 
 kotlin {
-    js {
+    js(IR) {
         browser {
             commonWebpackConfig {
                 cssSupport {
@@ -21,13 +21,13 @@ kotlin {
                 }
             }
         }
-        useCommonJs()
+        binaries.executable()
     }
 
     sourceSets {
-        jsMain {
+        val jsMain by getting {
             dependencies {
-                implementation(project.dependencies.platform(libs.kotlin.wrappers.bom))
+                implementation(project.dependencies.enforcedPlatform(libs.kotlin.wrappers.bom))
             }
         }
     }

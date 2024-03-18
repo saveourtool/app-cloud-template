@@ -1,7 +1,10 @@
 [versions]
-java = "21"
-kotlin = "1.9.22"
-kotlin-wrappers = "1.0.0-pre.713"
+java = "11"
+kotlin = "1.8.22"
+#kotlin-wrappers = "1.0.0-pre.715"
+#kotlin-wrappers = "1.0.0-pre.642"
+kotlin-wrappers = "1.0.0-pre.430"
+kotlin-serialization = "1.5.1"
 spring-boot = "3.2.3"
 springdoc = "2.3.0"
 
@@ -20,3 +23,4 @@ springdoc-openapi-starter-webflux-ui = { module = "org.springdoc:springdoc-opena
 springdoc-openapi-starter-webmvc-ui = { module = "org.springdoc:springdoc-openapi-starter-webmvc-ui", version.ref = "springdoc" }
 
 kotlin-wrappers-bom = { module = "org.jetbrains.kotlin-wrappers:kotlin-wrappers-bom", version.ref = "kotlin-wrappers" }
+kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "kotlin-serialization"}

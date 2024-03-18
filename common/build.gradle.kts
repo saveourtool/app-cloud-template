@@ -8,7 +8,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-core")
+                implementation(libs.kotlinx.serialization.core)
             }
         }
     }
