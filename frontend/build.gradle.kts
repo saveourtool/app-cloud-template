@@ -2,7 +2,6 @@ import com.saveourtool.template.build.kotlinw
 
 plugins {
     kotlin("multiplatform")
-//    id("com.saveourtool.template.build.kotlin-mpp-with-js-configuration")
 }
 
 kotlin {
@@ -18,7 +17,7 @@ kotlin {
     }
 
     sourceSets {
-        val jsMain by getting {
+        jsMain {
             dependencies {
                 implementation(project.dependencies.enforcedPlatform(libs.kotlin.wrappers.bom))
                 implementation(kotlinw("react"))

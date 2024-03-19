@@ -1,10 +1,7 @@
 [versions]
 java = "17"
 kotlin = "1.9.22"
-#kotlin-wrappers = "1.0.0-pre.715"
-#kotlin-wrappers = "1.0.0-pre.642"
-kotlin-wrappers = "1.0.0-pre.634"
-#kotlin-wrappers = "1.0.0-pre.430"
+kotlin-wrappers = "1.0.0-pre.715"
 kotlin-serialization = "1.6.3"
 spring-boot = "3.2.3"
 springdoc = "2.3.0"
