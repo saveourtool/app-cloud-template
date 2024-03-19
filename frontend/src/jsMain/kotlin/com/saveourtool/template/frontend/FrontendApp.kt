@@ -1,13 +1,13 @@
 package com.saveourtool.template.frontend
 
-import kotlinx.browser.document
+//import kotlinx.browser.document
 import react.FC
 import react.Props
 import react.create
 import react.dom.client.createRoot
 import react.dom.html.ReactHTML.div
 import react.dom.html.ReactHTML.h1
-//import web.dom.document
+import web.dom.document
 
 val App: FC<Props> = FC {
     h1 {
@@ -21,7 +21,7 @@ val App: FC<Props> = FC {
 }
 
 fun main() {
-//    kotlinx.browser.document.bgColor = "blue"
+//    kotlinx.browser.document.bgColor = "red"
 //    kotlinext.js.require<dynamic>("react-dom/client")
     val container = document.getElementById("root") ?: error("Couldn't find root container!")
     createRoot(container).render(App.create())
