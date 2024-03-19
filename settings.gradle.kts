@@ -24,8 +24,10 @@ plugins {
 
 includeBuild("gradle/plugins")
 include("common")
+include("authentication-utils")
 include("backend-webmvc")
 include("backend-webflux")
+include("gateway")
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 

@@ -39,6 +39,7 @@ tasks.withType<KotlinCompile> {
 
 dependencies {
     implementation(project.dependencies.enforcedPlatform(libs.spring.boot.dependencies))
+    implementation(project.dependencies.platform(libs.spring.cloud.dependencies))
 }
 
 tasks.withType<Test> {
