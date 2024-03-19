@@ -1,6 +1,6 @@
 [versions]
-java = "21"
 kotlin = "1.9.22"
+kotlin-serialization = "1.6.3"
 spring-boot = "3.2.3"
 springdoc = "2.3.0"
 
@@ -17,3 +17,5 @@ spring-boot-dependencies = { module = "org.springframework.boot:spring-boot-depe
 springdoc-openapi-starter-common = { module = "org.springdoc:springdoc-openapi-starter-common", version.ref = "springdoc" }
 springdoc-openapi-starter-webflux-ui = { module = "org.springdoc:springdoc-openapi-starter-webflux-ui", version.ref = "springdoc" }
 springdoc-openapi-starter-webmvc-ui = { module = "org.springdoc:springdoc-openapi-starter-webmvc-ui", version.ref = "springdoc" }
+
+kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "kotlin-serialization"}
