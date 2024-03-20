@@ -20,10 +20,23 @@ class User(
     var id: Long? = null,
     var name: String,
     var password: String?,
-    var role: String?,
+    var role: String,
     var email: String? = null,
 ) {
-    fun toUserDetails(): UserDetails {
-        AppUserDetails
+    /**
+     * @return [id] as not null with validating
+     * @throws IllegalArgumentException when [id] is not set that means entity is not saved yet
+     */
+    fun requiredId(): Long = requireNotNull(id) {
+        "Entity is not saved yet: $this"
     }
+
+    /**
+     * @return
+     */
+    fun toUserDetails(): UserDetails = AppUserDetails(
+        requiredId(),
+        name,
+        role,
+    )
 }
