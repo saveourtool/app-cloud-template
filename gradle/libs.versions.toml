@@ -4,7 +4,8 @@ kotlin-wrappers = "1.0.0-pre.715"
 kotlin-serialization = "1.6.3"
 spring-boot = "3.2.3"
 spring-cloud = "2023.0.0"
-springdoc = "2.3.0"
+spring-data = "2023.1.4"
+springdoc = "2.4.0"
 kotlin-logging = "6.0.3"
 
 [plugins]
@@ -16,11 +17,10 @@ kotlin-multiplatform-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gra
 kotlin-serialization-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
 spring-boot-gradle-plugin = { module = "org.springframework.boot:spring-boot-gradle-plugin", version.ref = "spring-boot" }
 
-spring-boot-dependencies = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot" }
-spring-cloud-dependencies = { module = "org.springframework.cloud:spring-cloud-dependencies", version.ref = "spring-cloud" }
-springdoc-openapi-starter-common = { module = "org.springdoc:springdoc-openapi-starter-common", version.ref = "springdoc" }
-springdoc-openapi-starter-webflux-ui = { module = "org.springdoc:springdoc-openapi-starter-webflux-ui", version.ref = "springdoc" }
-springdoc-openapi-starter-webmvc-ui = { module = "org.springdoc:springdoc-openapi-starter-webmvc-ui", version.ref = "springdoc" }
+spring-boot-bom = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot" }
+spring-cloud-bom = { module = "org.springframework.cloud:spring-cloud-dependencies", version.ref = "spring-cloud" }
+spring-data-bom = { module = "org.springframework.data:spring-data-bom", version.ref = "spring-data" }
+springdoc-openapi-bom = { module = "org.springdoc:springdoc-openapi", version.ref = "springdoc" }
 
 kotlin-wrappers-bom = { module = "org.jetbrains.kotlin-wrappers:kotlin-wrappers-bom", version.ref = "kotlin-wrappers" }
 kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "kotlin-serialization"}

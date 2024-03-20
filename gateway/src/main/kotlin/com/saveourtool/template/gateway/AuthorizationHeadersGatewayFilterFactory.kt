@@ -4,6 +4,7 @@
 
 package com.saveourtool.template.gateway
 
+import com.saveourtool.template.gateway.service.AppUserDetailsService
 import org.springframework.cloud.gateway.filter.GatewayFilter
 import org.springframework.cloud.gateway.filter.GatewayFilterChain
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory
@@ -19,6 +20,7 @@ import java.security.Principal
  */
 @Component
 class AuthorizationHeadersGatewayFilterFactory(
+    private val appUserDetailsService: AppUserDetailsService,
 //    private val backendService: BackendService,
 ) : AbstractGatewayFilterFactory<Any>() {
     override fun apply(config: Any?): GatewayFilter = GatewayFilter { exchange: ServerWebExchange, chain: GatewayFilterChain ->
