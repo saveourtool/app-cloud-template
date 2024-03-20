@@ -1,5 +1,7 @@
 package com.saveourtool.template.gateway.service
 
+import com.saveourtool.template.gateway.entities.OriginalLogin
+import com.saveourtool.template.gateway.entities.Role
 import com.saveourtool.template.gateway.entities.User
 import com.saveourtool.template.gateway.repository.OriginalLoginRepository
 import com.saveourtool.template.gateway.repository.UserRepository
@@ -14,11 +16,10 @@ open class UserService(
 ) {
     /**
      * @param username
-     * @param source source (where the user identity is coming from)
      * @return existed [User]
      */
-    fun findByOriginalLogin(username: String, source: String): User? =
-        originalLoginRepository.findByNameAndSource(username, source)?.user
+    fun findByName(username: String): User? =
+        userRepository.findByName(username)
 
     /**
      * @param source source (where the user identity is coming from)
@@ -29,14 +30,22 @@ open class UserService(
     open fun getOrCreateNew(
         source: String,
         nameInSource: String,
-    ): User {
-        originalLoginRepository.findByNameAndSource(nameInSource, source)
-            ?.user
-            ?: run {
-                val newUser = User(
-
+    ): User = originalLoginRepository.findByNameAndSource(nameInSource, source)
+        ?.user
+        ?: run {
+            val newUser = User(
+                name = nameInSource,
+                password = null,
+                role = Role.VIEWER.formattedName,
+            )
+                .let { userRepository.save(it) }
+            originalLoginRepository.save(
+                OriginalLogin(
+                    name = nameInSource,
+                    source = source,
+                    user = newUser
                 )
-                userRepository.save(newUser)
-            }
-    }
+            )
+            newUser
+        }
 }

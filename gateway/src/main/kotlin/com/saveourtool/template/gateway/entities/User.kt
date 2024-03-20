@@ -1,9 +1,11 @@
 package com.saveourtool.template.gateway.entities
 
+import com.saveourtool.template.authentication.AppUserDetails
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
+import org.springframework.security.core.userdetails.UserDetails
 
 /**
  * @property name
@@ -20,4 +22,8 @@ class User(
     var password: String?,
     var role: String?,
     var email: String? = null,
-)
+) {
+    fun toUserDetails(): UserDetails {
+        AppUserDetails
+    }
+}
