@@ -28,6 +28,7 @@ include("authentication-utils")
 include("backend-webmvc")
 include("backend-webflux")
 include("gateway")
+include("frontend")
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 

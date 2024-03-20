@@ -1,5 +1,5 @@
 plugins {
-    id("com.saveourtool.template.build.kotlin-mpp-configuration")
+    id("com.saveourtool.template.build.kotlin-mpp-with-jvm-configuration")
 }
 
 kotlin {
@@ -8,7 +8,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-core")
+                implementation(libs.kotlinx.serialization.core)
             }
         }
     }
