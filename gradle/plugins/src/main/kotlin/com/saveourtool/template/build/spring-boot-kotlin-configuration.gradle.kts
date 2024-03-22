@@ -1,10 +1,7 @@
 package com.saveourtool.template.build
 
-import org.gradle.accessors.dm.LibrariesForLibs
 import org.gradle.api.tasks.testing.Test
 import org.gradle.kotlin.dsl.*
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm")
@@ -16,10 +13,8 @@ plugins {
 
 configureKotlinCompile()
 
-@Suppress("GENERIC_VARIABLE_WRONG_DECLARATION")
-val libs = the<LibrariesForLibs>()
 dependencies {
-    implementation(project.dependencies.enforcedPlatform(libs.spring.boot.dependencies))
+    addAllSpringRelatedBoms(project, ::implementation)
 }
 
 tasks.withType<Test> {
