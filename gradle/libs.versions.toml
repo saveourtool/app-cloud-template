@@ -6,6 +6,7 @@ spring-boot = "3.2.3"
 springdoc = "2.3.0"
 
 [plugins]
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 
 [libraries]
 kotlin-spring-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-allopen", version.ref = "kotlin" }

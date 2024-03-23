@@ -14,12 +14,19 @@ plugins {
     id("org.springframework.boot")
 }
 
-configureKotlinCompile()
-
 @Suppress("GENERIC_VARIABLE_WRONG_DECLARATION")
 val libs = the<LibrariesForLibs>()
 dependencies {
     implementation(project.dependencies.enforcedPlatform(libs.spring.boot.dependencies))
+}
+
+configureKotlinCompile()
+
+kotlin {
+    allOpen {
+        annotation("javax.persistence.Entity")
+        annotation("org.springframework.stereotype.Service")
+    }
 }
 
 tasks.withType<Test> {

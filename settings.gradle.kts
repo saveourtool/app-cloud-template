@@ -4,12 +4,10 @@ import org.ajoberstar.reckon.gradle.ReckonExtension
 
 rootProject.name = "app-cloud-template"
 
-dependencyResolutionManagement {
-    repositories {
-        mavenCentral()
-    }
-}
+// ==== gradle configuration =============
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
+// ==== dependencies =====================
 pluginManagement {
     repositories {
         mavenCentral()
@@ -17,33 +15,27 @@ pluginManagement {
     }
 }
 
-plugins {
-    id("com.gradle.enterprise") version "3.15.1"
-    id("org.ajoberstar.reckon.settings") version "0.18.3"
-}
-
-includeBuild("gradle/plugins")
-include("common")
-include("backend-webmvc")
-include("backend-webflux")
-include("frontend")
-
-enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
-
-gradleEnterprise {
-    @Suppress("AVOID_NULL_CHECKS")
-    if (System.getenv("CI") != null) {
-        buildScan {
-            publishAlways()
-            termsOfServiceUrl = "https://gradle.com/terms-of-service"
-            termsOfServiceAgree = "yes"
-        }
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
     }
 }
 
+plugins {
+    id("org.ajoberstar.reckon.settings") version "0.18.3"
+}
+
+// ==== automated configuration of version =
 extensions.configure<ReckonExtension> {
     setDefaultInferredScope(Scope.PATCH)
     stages("beta", "rc", Reckoner.FINAL_STAGE)
     setScopeCalc(calcScopeFromProp().or(calcScopeFromCommitMessages()))
     setStageCalc(calcStageFromProp())
 }
+
+// ==== subprojects ========================
+includeBuild("gradle/plugins")
+include("common")
+include("backend-webmvc")
+include("backend-webflux")
+include("frontend")

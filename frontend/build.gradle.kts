@@ -1,7 +1,7 @@
 import com.saveourtool.template.build.kotlinw
 
 plugins {
-    kotlin("multiplatform")
+    alias(libs.plugins.kotlin.multiplatform)
 }
 
 kotlin {
