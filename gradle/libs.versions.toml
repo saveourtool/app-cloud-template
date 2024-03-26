@@ -1,5 +1,5 @@
 [versions]
-kotlin = "1.9.22"
+kotlin = "1.9.23"
 kotlin-wrappers = "1.0.0-pre.715"
 kotlin-serialization = "1.6.3"
 spring-boot = "3.2.3"
