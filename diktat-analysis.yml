@@ -2,7 +2,7 @@
 - name: DIKTAT_COMMON
   enabled: true
   configuration:
-    domainName: com.ptsecurity
+    domainName: com.saveourtool
     kotlinVersion: 1.9
     srcDirectories: "main,commonMain,jvmMain"
     testDirs: "test,jvmTest,commonTest"
