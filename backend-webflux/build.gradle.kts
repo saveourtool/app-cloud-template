@@ -5,12 +5,11 @@ plugins {
 }
 
 dependencies {
-    implementation(libs.springdoc.openapi.starter.common)
-    implementation(libs.springdoc.openapi.starter.webflux.ui)
+    implementation(projects.common)
+    implementation("org.springdoc:springdoc-openapi-starter-webflux-ui")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json")
-    implementation(projects.common)
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 

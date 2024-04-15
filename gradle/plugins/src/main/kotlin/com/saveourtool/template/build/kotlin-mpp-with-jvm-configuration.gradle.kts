@@ -8,16 +8,13 @@ plugins {
     kotlin("multiplatform")
 }
 
-@Suppress("GENERIC_VARIABLE_WRONG_DECLARATION")
-val libs = the<LibrariesForLibs>()
-
 kotlin {
     jvm()
 
     sourceSets {
         jvmMain {
             dependencies {
-                implementation(project.dependencies.enforcedPlatform(libs.spring.boot.dependencies))
+                addAllSpringRelatedBoms(project, ::implementation)
             }
         }
     }
