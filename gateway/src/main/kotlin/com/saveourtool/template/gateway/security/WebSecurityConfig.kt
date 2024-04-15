@@ -5,6 +5,7 @@
 package com.saveourtool.template.gateway.security
 
 import com.saveourtool.template.gateway.service.UserService
+import com.saveourtool.template.gateway.utils.StoringServerAuthenticationSuccessHandler
 import com.saveourtool.template.util.blockingToMono
 import org.springframework.context.annotation.Bean
 import org.springframework.security.authentication.UserDetailsRepositoryReactiveAuthenticationManager

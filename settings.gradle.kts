@@ -24,7 +24,8 @@ plugins {
 
 includeBuild("gradle/plugins")
 include("common")
-include("authentication-utils")
+include("authentication:authentication-service")
+include("authentication:authentication-utils")
 include("backend-webmvc")
 include("backend-webflux")
 include("gateway")

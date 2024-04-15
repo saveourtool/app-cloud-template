@@ -12,9 +12,10 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json")
     implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation(libs.kotlin.logging)
 }
 
 mysqlLocalRun {
-    databaseName = "gateway"
+    databaseName = "authentication"
     liquibaseChangelogPath = project.layout.projectDirectory.file("src/db/db.changelog.xml")
 }
