@@ -1,15 +1,18 @@
+repositories {
+    mavenCentral()
+    gradlePluginPortal()
+}
+
 plugins {
-    id("com.saveourtool.template.build.kotlin-mpp-with-jvm-configuration")
+    alias(libs.plugins.kotlin.multiplatform)
 }
 
 kotlin {
-    jvm()
+    jvm {
 
-    sourceSets {
-        commonMain {
-            dependencies {
-                implementation(libs.kotlinx.serialization.core)
-            }
-        }
     }
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform()
 }
