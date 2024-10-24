@@ -1,9 +1,9 @@
 [versions]
 kotlin = "1.9.23"
-kotlin-wrappers = "1.0.0-pre.715"
+kotlin-wrappers = "1.0.0-pre.820"
 kotlin-serialization = "1.6.3"
-spring-boot = "3.2.3"
-springdoc = "2.3.0"
+spring-boot = "3.3.5"
+springdoc = "2.6.0"
 
 [plugins]
 
