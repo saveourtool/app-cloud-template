@@ -19,7 +19,7 @@ pluginManagement {
 
 plugins {
     id("com.gradle.enterprise") version "3.15.1"
-    id("org.ajoberstar.reckon.settings") version "0.18.3"
+    id("org.ajoberstar.reckon.settings") version "2.0.0"
 }
 
 includeBuild("gradle/plugins")
